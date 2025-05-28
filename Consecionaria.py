@@ -13,6 +13,6 @@ class Car:
     def rent(self):
         if self.available_for_rent:
             self.available_for_rent = False
-            pr
-        else
+            print
+        else:
             
