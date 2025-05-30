@@ -10,7 +10,10 @@ class Car:
         self.available_for_sell = True
 
 class User:
-    def
+    def __init__(self, id, name, surname):
+        self.id = id
+        self.name = name
+        self.surname = surname
 
 
     def rent(self):
