@@ -9,10 +9,13 @@ class Car:
         self.available_for_rent = True
         self.available_for_sell = True
 
+class User:
+    def
+
 
     def rent(self):
         if self.available_for_rent:
             self.available_for_rent = False
-            print
+            print(f"El auto {self.brand}, {self.model} ha sido rentado")
         else:
             
