@@ -9,24 +9,32 @@ class Car:
         self.available_for_rent = True
         self.available_for_sell = True
 
-    def rent(self):
+    def rent_car(self): 
         if self.available_for_rent:
             self.available_for_rent = False
-            print(f"El auto {self.brand}, {self.model} ha sido rentado")
+            print(f"El auto {self.brand}, {self.model} ha sido rentado.")
+            return True  # Indica éxito
         else:
-            print(f"Lo sentimos, el auto {self.brand}, {self.model} no está disponible para rentar en este momento")
+            print(f"Lo sentimos, el auto {self.brand}, {self.model} no está disponible para rentar en este momento.")
+            return False # Indica fracaso
 
-    def sell(self):
+    def sell_car(self):
         if self.available_for_sell:
             self.available_for_sell = False
-            print(f"El auto {self.brand}, {self.model} ha sido vendido")
+            self.available_for_rent = False # Un auto vendido YA NO está disponible para rentar!
+            print(f"El auto {self.brand}, {self.model} ha sido vendido.")
+            return True  # Indica éxito
         else:
-            print(f"Lo sentimos, el auto {self.brand}, {self.model} no está disponible para vender en este momento")
+            print(f"Lo sentimos, el auto {self.brand}, {self.model} no está disponible para vender en este momento.")
+            return False # Indica fracaso
 
-    def reBuy(self):
+    def rebuy_car(self):
         self.available_for_sell = True
-        print(f"El auto {self.brand}, {self.model} ha sido devuelto y está disponible para la venta nuevamente")
-
+        self.available_for_rent = True # Un auto recomprado VUELVE a estar disponible para rentar!
+        print(f"El auto {self.brand}, {self.model} ha sido devuelto y está disponible para la venta nuevamente.")
+        return True  # Indica éxito
+    
+    
 class User:
     def __init__(self, id, name, surname):
         self.id = id
@@ -37,7 +45,7 @@ class User:
 
     def rentCar(self, car):
         if car.available_for_rent: # Primero verificas si el auto está disponible
-            car.rent() # Si está disponible, lo rentas (y esto lo marca como no disponible)
+            car.rent_car() # Si está disponible, lo rentas (y esto lo marca como no disponible)
             self.rented_cars.append(car) # Y lo añades a la lista del usuario
             print(f"El usuario {self.name} ha rentado el auto {car.brand}, {car.model}")
         else:
@@ -45,25 +53,13 @@ class User:
             print(f"Lo sentimos, el auto {car.brand}, {car.model} no está disponible para rentar en este momento")
             # No haces nada más, porque el auto no se pudo rentar.
 
-    def rentCar(self, car):
-        car.rent()
-        if car.available_for_rent:
-            self.rented_cars.append(car)
-            print(f"El usuario {self.name} ha rentado el auto {car.brand}, {car.model}")
-        else:
-            print(f"Lo sentimos, el auto {car.brand}, {car.model} no está disponible para rentar en este momento")
-
     def buyCar(self, car):
-        car.sell()
+        car.sell_car() 
         if car.available_for_sell:
             self.purchased_cars.append(car)
             print(f"El usuario {self.name} ha comprado el auto {car.brand}, {car.model}")
         else:
             print(f"Lo sentimos, el auto {car.brand}, {car.model} no está disponible para vender en este momento")
-
-
-
-
 
 class Concesionaria:
     def __init__(self):
@@ -104,6 +100,9 @@ dealership.addCar(car2)
 dealership.addCar(car3)
 dealership.addCar(car4)
 
+#Show available cars
+dealership.showAvailableCars()
+
 #Register users
 dealership.registerUser(user1) 
 dealership.registerUser(user2)
@@ -124,12 +123,15 @@ user1.rentCar(car1)
 user2.buyCar(car2)
 
 #User returns a car
-car1.reBuy()
+car1.rebuy_car()  # Rebuying the car makes it available again
 
 #User rents a car again
 user1.rentCar(car1)
 #User buys a car again
 user2.buyCar(car2) 
+
+#Show available cars after transactions
+dealership.showAvailableCars()
 
 
 
